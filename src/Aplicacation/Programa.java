@@ -24,6 +24,8 @@ public class Programa {
 				System.out.print("Souce: ");
 				ChessPosition souce = UI.readChessPosition(sc);
 				
+				boolean[][]possibleMoves = chessMatch.possibleMoves(souce);
+				
 				System.out.println();
 				System.out.println("Target: ");
 				ChessPosition target = UI.readChessPosition(sc);

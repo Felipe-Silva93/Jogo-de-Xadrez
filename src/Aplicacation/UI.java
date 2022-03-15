@@ -31,7 +31,7 @@ public class UI {
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 	
 	
-	// https://stackoverflow.com/questions/2979383/java-clear-the-console
+	// https://stackoverflow.com/questions/2979383/java-clear-the-console limpar a tela
 	public static void clearScreen() {
 	 System.out.print("\033[H\033[2J");
 	 System.out.flush();
@@ -58,7 +58,20 @@ public class UI {
 			System.out.print((8 - i) + " ");
 
 			for (int j = 0; j < pieces.length; j++) {
-				printPiece(pieces[i][j]);
+				printPiece(pieces[i][j],false);//imprimir o tabuleiro sem a questão dos movimentos possives vai imprimir false indicando que nem uma peça é para ter o fundo colorido
+			}
+			System.out.println();
+		}
+		System.out.println("  a b c d e f g h");
+
+	}
+	
+	public static void printBoard(ChessPiece[][] pieces,boolean[][] possibleMoves) {
+		for (int i = 0; i < pieces.length; i++) {
+			System.out.print((8 - i) + " ");
+
+			for (int j = 0; j < pieces.length; j++) {
+				printPiece(pieces[i][j],possibleMoves[i][j]);
 			}
 			System.out.println();
 		}
@@ -66,13 +79,17 @@ public class UI {
 
 	}
 
-	private static void printPiece(ChessPiece piece) {//metodo testa a cor da peça se é branca ou preta
+	private static void printPiece(ChessPiece piece,boolean background/*variavel que serve para indicar se deve ou não colorir o funda da peça*/) {//metodo testa a cor da peça se é branca ou preta
+		
+		if(background) {//se for verdadeito vai ter que mudar o fudo da peça
+			System.out.println(ANSI_BLUE_BACKGROUND);
+		}
 		
 		if (piece == null) {
-			System.out.print("-");
+			System.out.print("-"+ ANSI_RESET);
 		} else {
 			if (piece.getColor() == Color.WHITE) {
-				System.out.print(ANSI_WHITE + piece + ANSI_RESET);
+				System.out.print(ANSI_WHITE + piece + ANSI_RESET);// ANSI_RESET para limpar a questão da cor
 			} else {
 				System.out.print(ANSI_YELLOW + piece + ANSI_RESET);
 			}
